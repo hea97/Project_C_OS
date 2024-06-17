@@ -12,3 +12,5 @@ As part of our first-year performance assessment, we will form teams of two and 
 업무 : 코드분석 및 리뷰, ppt 발표
 
 ---  
+### 참고하였던 곳
+https://m.blog.naver.com/simhs93/221256936264  
