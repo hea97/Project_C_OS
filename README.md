@@ -1,8 +1,7 @@
 # Creating-an-OS-in-C
 As part of our first-year performance assessment, we will form teams of two and proceed with a project using the C language. This process will be documented on GitHub. Our topic is "Creating an OS in C."
 
-
-## C언어로 OS 만들기
+---
 준비기간 3주  
 발표 : 6월 24일  
 
