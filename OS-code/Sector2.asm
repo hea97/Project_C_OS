@@ -24,7 +24,7 @@ START:
 printf:
 	push eax
 	push es
-	mov ax, VideoSegment ; ºñµð¿À
+	mov ax, VideoSegment ; ÂºÃ±ÂµÃ°Â¿Ã€
 	mov es, ax
 	
 printf_loop:
