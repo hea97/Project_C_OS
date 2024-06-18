@@ -1,0 +1,41 @@
+CC = gcc  # 컴파일러로 gcc를 사용
+
+# final.img 생성 규칙: Boot.img, Sector2.img, disk.img 파일을 합쳐서 final.img를 생성
+final.img : Boot.img Sector2.img disk.img
+	cat Boot.img Sector2.img disk.img > final.img
+
+# disk.img 생성 규칙: main.img를 바이너리 형식으로 변환하여 disk.img를 생성
+disk.img : main.img
+	objcopy -O binary main.img disk.img
+
+# main.img 생성 규칙: main.o, function.o, interrupt.o, shell.o를 링크하여 main.img를 생성
+main.img : main.o function.o interrupt.o shell.o
+	ld -melf_i386 -Ttext 0x10200 -nostdlib main.o function.o interrupt.o shell.o -o main.img
+
+# main.o 생성 규칙: main.c를 컴파일하여 main.o를 생성
+main.o : main.c
+	gcc -c  -masm=intel -m32 -ffreestanding main.c -o main.o
+
+# function.o 생성 규칙: function.c를 컴파일하여 function.o를 생성
+function.o : function.c
+	gcc -c -masm=intel -m32 -ffreestanding function.c -o function.o
+
+# interrupt.o 생성 규칙: interrupt.c를 컴파일하여 interrupt.o를 생성
+interrupt.o : interrupt.c
+	gcc -c -masm=intel -m32 -ffreestanding interrupt.c -o interrupt.o
+
+# shell.o 생성 규칙: shell.c를 컴파일하여 shell.o를 생성
+shell.o : shell.c
+	gcc -c -masm=intel -m32 -ffreestanding shell.c -o shell.o
+
+# Boot.img 생성 규칙: Boot.asm을 어셈블하여 Boot.img를 생성
+Boot.img : Boot.asm
+	nasm -f bin -o Boot.img Boot.asm
+
+# Sector2.img 생성 규칙: Sector2.asm을 어셈블하여 Sector2.img를 생성
+Sector2.img : Sector2.asm
+	nasm -f bin -o Sector2.img Sector2.asm
+
+# clean 규칙: 모든 .o 및 .img 파일을 삭제
+clean :
+	rm *.o *.img
